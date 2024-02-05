@@ -1,0 +1,28 @@
+pkgname=plutolang
+pkgver=0.8.1
+pkgrel=0
+pkgdesc="A superset of Lua 5.4 — with unique features, optimizations, and improvements."
+url="https://pluto-lang.org"
+arch="all"
+license="MIT"
+depends="readline"
+makedepends="readline-dev make clang-dev"
+subpackages="$pkgname-dev"
+source="https://github.com/PlutoLang/Pluto/archive/$pkgver/plutolang-$pkgver.tar.gz"
+builddir="$srcdir/Pluto-$pkgver"
+
+build() {
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$pkgdir" install
+}
+
+sha512sums="
+4cd95c146e4936e3ff8b3d05d95dc65d940b84c1f0b38cd6042bca57a79be9dfaca71b6d363893ac6dca18d5ce06fbce08638dab3007e8282fc731fa05937348  plutolang-0.8.1.tar.gz
+"

@@ -1,0 +1,25 @@
+name: Packages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/**'
+  workflow_dispatch:
+    inputs:
+      packages:
+        description: 'A space-separated packages name to build.'
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Building for ${{ matrix.arch }}
+    strategy:
+      matrix:
+        arch: [armhf, armv7, aarch64, x86_64]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jirutka/
