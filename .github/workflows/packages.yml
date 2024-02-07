@@ -52,6 +52,16 @@ jobs:
             done
           fi
 
+      - name: Setup abuild
+        shell: alpine.sh {0}
+        env:
+          ABUILD_PRIVKEY: ${{ secrets.ABUILD_PRIVKEY }}
+        run: |
+          echo "$ABUILD_PRIVKEY" >apk-repo.rsa
+          mkdir -p ~/.abuild
+          echo "PACKAGER_PRIVKEY='$PWD/apk-repo.rsa'"
+          mv apk-repo.rsa.pub /etc/apk/keys
+
       - name: Build package
         shell: alpine.sh {0}
         run: |
