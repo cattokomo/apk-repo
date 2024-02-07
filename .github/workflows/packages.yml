@@ -37,6 +37,7 @@ jobs:
             alpine-sdk
             abuild
             bash
+            sudo
 
       - name: Setup and gather build summaries
         run: |
@@ -60,7 +61,7 @@ jobs:
           echo "$ABUILD_PRIVKEY" >apk-repo.rsa
           mkdir -p ~/.abuild
           echo "PACKAGER_PRIVKEY='$PWD/apk-repo.rsa'"
-          mv apk-repo.rsa.pub /etc/apk/keys
+          sudo mv apk-repo.rsa.pub /etc/apk/keys
 
       - name: Build package
         shell: alpine.sh {0}
