@@ -38,6 +38,7 @@ jobs:
             abuild
             bash
             sudo
+            shadow
 
       - name: Setup and gather build summaries
         run: |
@@ -62,6 +63,7 @@ jobs:
           mkdir -p ~/.abuild
           echo "PACKAGER_PRIVKEY='$PWD/apk-repo.rsa'" >"$HOME/.abuild/abuild.conf"
           sudo cp apk-repo.rsa.pub /etc/apk/keys
+          sudo addgroup runner abuild
 
       - name: Build package
         shell: alpine.sh {0}
