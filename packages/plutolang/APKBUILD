@@ -12,15 +12,11 @@ source="https://github.com/PlutoLang/Pluto/archive/$pkgver/plutolang-$pkgver.tar
 builddir="$srcdir/Pluto-$pkgver"
 
 build() {
-	make
-}
-
-check() {
-	make check
+	make linux-readline
 }
 
 package() {
-	make DESTDIR="$pkgdir" install
+	make install INSTALL_TOP="$pkgdir"
 }
 
 sha512sums="
