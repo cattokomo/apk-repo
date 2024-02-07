@@ -13,7 +13,7 @@ task.buildpkg() {
       continue
     }
     pushd "./packages/$pkg"
-    abuild -cr -P "$ROOT/repo" -s . || bake.die "Could not build '$pkg' package"
+    abuild -cr -P "$ROOT/repo" || bake.die "Could not build '$pkg' package"
     ls -a
     popd
   done <<<"$*"
