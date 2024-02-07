@@ -16,6 +16,9 @@ build() {
 }
 
 package() {
+  CXXFLAGS="$CXXFLAGS -std=c++17"
+  export MYCFLAGS="-fPIC $CXXFLAGS $CPPFLAGS"
+  export MYLDFLAGS="$LDFLAGS"
 	make install INSTALL_TOP="$pkgdir"
 }
 
