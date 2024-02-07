@@ -7,7 +7,7 @@ arch="all"
 license="MIT"
 depends="readline"
 makedepends="readline-dev make clang-dev"
-subpackages="$pkgname-dev"
+subpackages="$pkgname-dev $pkgname-static"
 source="https://github.com/PlutoLang/Pluto/archive/$pkgver/plutolang-$pkgver.tar.gz"
 builddir="$srcdir/Pluto-$pkgver"
 

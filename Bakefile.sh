@@ -1,4 +1,7 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S ./bake
+# vim: set ft=bash
+
+ROOT="$PWD"
 
 task.buildpkg() {
   [[ -n "$1" ]] || bake.die "Specify at least one package to build"
@@ -10,7 +13,7 @@ task.buildpkg() {
       continue
     }
     pushd "./packages/$pkg"
-    abuild -cr || bake.die "Could not build '$pkg' package"
+    abuild -cr -P "$ROOT/repo" -s . || bake.die "Could not build '$pkg' package"
     ls -a
     popd
   done <<<"$*"
