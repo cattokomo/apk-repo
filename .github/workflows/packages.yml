@@ -1,11 +1,15 @@
 name: Packages
 
+# » TODO:
+#  › implement build summeries with 'push' event
+
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'packages/**'
+  # i'm having a hard time here, i'll implement it later
+  #  push:
+  #    branches:
+  #      - main
+  #    paths:
+  #      - 'packages/**'
   workflow_dispatch:
     inputs:
       packages:
@@ -21,5 +25,35 @@ jobs:
       matrix:
         arch: [armhf, armv7, aarch64, x86_64]
     steps:
-      - uses: actions/checkout@v4
-      - uses: jirutka/
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Alpine Linux
+        uses: jirutka/setup-alpine@v1
+        with:
+          branch: edge
+          arch: ${{ matrix.arch }}
+          packages: >
+            alpine-sdk
+            abuild
+            bash
+
+      - name: Setup and gather build summaries
+        run: |
+          mkdir artifacts
+          if [[ '${{ github.event_name }}' = 'workflow_dispatch' ]]; then
+            read -r -a packages <<<"${{ inputs.packages }}"
+            for pkg in "${packages[@]}"; do
+              [[ -d "./packages/$pkg" ]] || {
+                echo "Not a package: $pkg"
+                exit 1
+              }
+              tee -a packages.txt <<<"$pkg"
+            done
+          fi
+
+      - name: Build package
+        shell: alpine.sh {0}
+        run: |
+          ./bake buildpkg $(cat packages.txt)
+          ls -a
