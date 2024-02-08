@@ -8,12 +8,13 @@ license="MIT"
 depends="readline"
 makedepends="readline-dev make clang-dev"
 subpackages="$pkgname-dev $pkgname-static"
-source="https://github.com/PlutoLang/Pluto/archive/$pkgver/plutolang-$pkgver.tar.gz"
-builddir="$srcdir/Pluto-$pkgver"
+source="
+  https://github.com/PlutoLang/Pluto/archive/$pkgver/plutolang-$pkgver.tar.gz
 
-prepare() {
-  default_prepare
-}
+  01-Makefile.patch
+  02-src-Makefile.patch
+  03-src-luaconf.h.patch"
+builddir="$srcdir/Pluto-$pkgver"
 
 build() {
 	make linux-readline
