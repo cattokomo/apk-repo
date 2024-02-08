@@ -11,6 +11,10 @@ subpackages="$pkgname-dev $pkgname-static"
 source="https://github.com/PlutoLang/Pluto/archive/$pkgver/plutolang-$pkgver.tar.gz"
 builddir="$srcdir/Pluto-$pkgver"
 
+prepare() {
+  default_prepare
+}
+
 build() {
 	make linux-readline
 }
